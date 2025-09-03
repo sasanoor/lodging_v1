@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from rest_framework import viewsets
+from .models import Message
+from .serializers import MessageSerializer
 
-# Create your views here.
-
-def index(request):
-    return HttpResponse("Hello, Django!")
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
