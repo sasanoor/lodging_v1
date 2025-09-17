@@ -13,26 +13,26 @@ const AddGuest = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const [formData, setFormData] = useState({
-    roomNumber: "",
+    room_number: "",
     name: "",
     address: "",
     city: "",
     state: "",
     zip: "",
     car: "",
-    licensePlate: "",
+    license_plate: "",
     telephone: "",
-    checkInDate: getTodayDate(),
-    checkInTime: getCurrentTime(),
-    checkOutDate: "",
-    checkOutTime: "11:00",
-    amountCash: "",
-    amountCredit: "",
-    amountBalance: "",
-    numberOfDays: "",
-    clerkName: "",
+    check_in_date: getTodayDate(),
+    check_in_time: getCurrentTime(),
+    check_out_date: "",
+    check_out_time: "11:00",
+    amount_cash: "",
+    amount_credit: "",
+    amount_balance: "",
+    number_of_days: "",
+    clerk_name: "",
     comments: "",
-    noofGuests: "",
+    no_of_guests: "",
   });
 
   const handleChange = (e) => {
@@ -49,7 +49,7 @@ const AddGuest = () => {
     });
 
     try {
-      await axios.post(`${API_BASE_URL}/guests/add_guest/`, form, {
+      await axios.post(`${API_BASE_URL}/guests/`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setSuccessMessage("Guest added successfully!");
@@ -71,26 +71,26 @@ const AddGuest = () => {
 
         <form onSubmit={handleSubmit}>
           {[
-            { label: "Room Number", name: "roomNumber" },
+            { label: "Room Number", name: "room_number" },
             { label: "Name", name: "name" },
             { label: "Address", name: "address" },
             { label: "City", name: "city" },
             { label: "State", name: "state" },
             { label: "ZIP", name: "zip" },
             { label: "Car", name: "car" },
-            { label: "License Plate Number", name: "licensePlate" },
+            { label: "License Plate Number", name: "license_plate" },
             { label: "Telephone", name: "telephone" },
-            { label: "Check-In Date", name: "checkInDate", type: "date" },
-            { label: "Check-In Time", name: "checkInTime", type: "time" },
-            { label: "Check-Out Date", name: "checkOutDate", type: "date" },
-            { label: "Check-Out Time", name: "checkOutTime", type: "time" },
-            { label: "Amount (Cash)", name: "amountCash" },
-            { label: "Amount (Credit)", name: "amountCredit" },
-            { label: "Amount (Balance)", name: "amountBalance" },
-            { label: "Number of Days", name: "numberOfDays" },
-            { label: "Clerk Name", name: "clerkName" },
+            { label: "Check-In Date", name: "check_in_date", type: "date" },
+            { label: "Check-In Time", name: "check_in_time", type: "time" },
+            { label: "Check-Out Date", name: "check_out_date", type: "date" },
+            { label: "Check-Out Time", name: "check_out_time", type: "time" },
+            { label: "Amount (Cash)", name: "amount_cash" },
+            { label: "Amount (Credit)", name: "amount_credit" },
+            { label: "Amount (Balance)", name: "amount_balance" },
+            { label: "Number of Days", name: "number_of_days" },
+            { label: "Clerk Name", name: "clerk_name" },
             { label: "Comments", name: "comments" },
-            { label: "No.of Guests", name: "noofGuests" },
+            { label: "No.of Guests", name: "no_of_guests" },
           ].map(({ label, name, type = "text" }) => (
             <div key={name} className="form-group">
               <label>{label}</label>
@@ -99,7 +99,7 @@ const AddGuest = () => {
                 name={name}
                 value={formData[name]}
                 onChange={handleChange}
-                required={["roomNumber", "name", "checkInDate", "checkOutDate"].includes(name)}
+                required={["room_number", "name", "check_in_date", "check_out_date"].includes(name)}
               />
             </div>
           ))}
