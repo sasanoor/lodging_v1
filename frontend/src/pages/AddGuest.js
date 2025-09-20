@@ -52,11 +52,23 @@ const AddGuest = () => {
       await axios.post(`${API_BASE_URL}/guests/`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setSuccessMessage("Guest added successfully!");
-      setTimeout(() => navigate("/"), 1000);
+
+      setSuccessMessage("✅ Guest added successfully!");
+      setTimeout(() => navigate("/"), 1200);
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("❌ Failed to add guest. Please try again.");
+
+      if (error.response && error.response.data) {
+        // Collect all field errors from DRF
+        const errorData = error.response.data;
+        const messages = Object.entries(errorData)
+          .map(([field, msgs]) => `${field}: ${msgs.join(", ")}`)
+          .join("\n");
+
+        alert("❌ Failed to add guest:\n\n" + messages);
+      } else {
+        alert("❌ Failed to add guest. Please check your input and try again.");
+      }
     }
   };
 

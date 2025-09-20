@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Message from "./components/Message";
 import Home from "./pages/Home";
 import AddGuest from "./pages/AddGuest";
+import GuestList from "./pages/GuestList";
 
 function App() {
   const [message, setMessage] = useState({ type: "", text: "" });
@@ -31,6 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add-guest" element={<AddGuest />} />
+        <Route path="/view-guest-list" element={<GuestList />} />
       </Routes>
     </Router>
   );
