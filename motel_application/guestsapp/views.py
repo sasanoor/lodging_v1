@@ -45,9 +45,11 @@
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from .models import AddGuest
 from .serializers import GuestSerializer
-
+from datetime import date, datetime
+from django.db.models import Q
 
 class GuestViewSet(viewsets.ModelViewSet):
     """
@@ -69,3 +71,13 @@ class GuestViewSet(viewsets.ModelViewSet):
             {"message": "Guest added successfully!.", "data": serializer.data},
             status=status.HTTP_201_CREATED,
         )
+    @action(detail=False, methods=["get"], url_path="today")
+    def today_checkinlist(self, request):
+        today = date.today()
+        # today = datetime.strptime(date_str, "%Y-%m-%d").date()
+        guests = AddGuest.objects.filter(
+            Q(check_in_date__lte=today, check_out_date__gte=today) |  # guests currently staying
+            Q(check_out_date=today)                                   # guests checking out today
+        ).order_by("room_number")
+        serializer = self.get_serializer(guests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
